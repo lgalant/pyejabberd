@@ -395,6 +395,99 @@ class EjabberdAPIClient(contract.EjabberdAPIContract):
         """
         return self._call_api(definitions.GetRoster, user=user, host=host)
 
+    def srg_create(self, group, host, name, description, display):     
+        """
+        Create a Shared Roster Group        
+
+        :param group: The id of the group we want to create
+        :type group: str|unicode
+        :param host: The XMPP_DOMAIN
+        :type host: str|unicode
+        :param name: The name of the group
+        :type name: str|unicode
+        :param description: The description of the group
+        :type description: str|unicode
+        :param name: The description of the group
+        :type name: str|unicode        
+        :rtype: bool
+        :return: A boolean indicating whether the Roster Group has been created successfully
+        """
+        return self._call_api(definitions.SrgCreate,  group=group,host=host,name=name,description=description, display=display)
+        
+        
+    def srg_delete(self, group, host):    
+        """
+        Delete a Shared Roster Group
+
+        :param group: The id of the group we want to delete
+        :type group: str|unicode
+        :param host: The XMPP_DOMAIN
+        :type host: str|unicode
+        :rtype: bool
+        :return: A boolean indicating whether the Roster Group has been deleted successfully        
+        """
+        return self._call_api(definitions.SrgDelete, host=host, group=group)
+    
+    def srg_get_info(self,host, group):    
+        """
+        Get info of a Shared Roster Group
+
+        :param host: The XMPP_DOMAIN
+        :type host: str|unicode
+        :param group: The name of the group we want information from
+        :type group: str|unicode
+        :rtype: Iterable
+        :return: A list of shared roster group's details
+        """
+        return self._call_api(definitions.SrgGetInfo, host=host, group=group)
+        
+    def srg_get_members(self,host, group):    
+        """
+        Get members of a Shared Roster Group
+
+        :param host: The XMPP_DOMAIN
+        :type host: str|unicode
+        :param group: The name of the group we want members list from
+        :type group: str|unicode
+        :rtype: Iterable
+        :return: A list of shared roster group's members
+        """
+        return self._call_api(definitions.SrgGetMembers, host=host, group=group)
+        
+    def srg_user_add(self,user, host, group, grouphost):    
+        """
+        Add the JID user@host to the Shared Roster Group
+        
+        :param user: The username for the user we want to add to Roster Group
+        :type user: str|unicode
+        :param host: The XMPP_DOMAIN
+        :type host: str|unicode
+        :param group: The name of the group we want to add the user to
+        :type group: str|unicode
+        :param grouphost: The XMPP_DOMAIN
+        :type grouphost: str|unicode
+        :rtype: bool
+        :return: A boolean indicating whether the user has been added successfully
+        """
+        return self._call_api(definitions.SrgUserAdd, user=user, host=host, group=group, grouphost=grouphost)        
+    
+    def srg_user_del(self,user, host, group, grouphost):    
+        """
+        Delete this JID user@host from the Shared Roster Group
+        
+        :param user: The username for the user we want to delete from Roster Group
+        :type user: str|unicode
+        :param host: The XMPP_DOMAIN
+        :type host: str|unicode
+        :param group: The name of the Roster Group we want to delete the user from
+        :type group: str|unicode
+        :param grouphost: The XMPP_DOMAIN
+        :type grouphost: str|unicode
+        :rtype: bool
+        :return: A boolean indicating whether the user has been deleted successfully
+        """
+        return self._call_api(definitions.SrgUserDel, user=user, host=host, group=group, grouphost=grouphost)        
+        
     def _validate_and_serialize_arguments(self, api, arguments):
         """
         Internal method to validate and serialize arguments
